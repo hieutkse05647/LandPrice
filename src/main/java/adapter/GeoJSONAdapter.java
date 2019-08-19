@@ -19,6 +19,7 @@ import org.primefaces.json.JSONObject;
  * @author Phong
  */
 public class GeoJSONAdapter {
+
     public static JSONObject parseStringToJSON(String jsonString) {
         try {
             return new JSONObject(jsonString);
@@ -36,7 +37,7 @@ public class GeoJSONAdapter {
             JSONObject elementInArray = new JSONObject();
             LinkedHashMap<Double, Double> map = area.getMap();
             String color = ColorDrawer.IdentifyColor(area.getCurrentPrice());
-            elementInArray = createJSONObjectArea(map, color);
+            elementInArray = createJSONObjectArea(map, color, area);
             jsonArray.put(elementInArray);
         }
 
@@ -74,13 +75,23 @@ public class GeoJSONAdapter {
         return json;
     }
 
+    private static JSONObject createJSONProperty(Area area, String color){
+        JSONObject json = new JSONObject();
+        json.put("color", color);
+        json.put("name", area.getAreaName());
+        json.put("id", area.getAreaID());
+        return json;
+    }
+    
     private static JSONObject createJSONObjectArea(Map<Double, Double> map,
-            String areaColor) {
+            String areaColor, Area area) {
         JSONObject json = new JSONObject();
         json.put("type", "Feature");
-        JSONObject color = new JSONObject();
-        color.put("color", areaColor);
-        json.put("properties", (Object) color);
+        
+        JSONObject property = new JSONObject();
+        property = createJSONProperty(area, areaColor);
+        json.put("properties", (Object) property);
+        
         JSONObject geometry = new JSONObject();
         geometry = createJSONGeometry(map);
         json.put("geometry", (Object) geometry);

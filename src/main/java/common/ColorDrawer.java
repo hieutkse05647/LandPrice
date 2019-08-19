@@ -12,6 +12,12 @@ package common;
 public class ColorDrawer {
     
     public static String IdentifyColor(double currentPrice) {
+        if (currentPrice < 50){
+            return "blue";
+        }
+        if (currentPrice < 70){
+            return "orange";
+        }
         return "red";
     }
 }

@@ -25,15 +25,25 @@ public class Area {
     private String AreaName;
     private double AreaMaxPrice;
     private double AreaMinPrice;
-
+    private String AreaDescription;
+    
     public Area( int AreaID, String AreaName, double AreaMaxPrice, double AreaMinPrice,double currentPrice) {
         this.currentPrice = currentPrice;
         this.AreaID = AreaID;
         this.AreaName = AreaName;
         this.AreaMaxPrice = AreaMaxPrice;
         this.AreaMinPrice = AreaMinPrice;
+        this.AreaDescription = AreaDescription;
     }
 
+    public Area( int AreaID, String AreaName, String AreaDescription, double currentPrice, LinkedHashMap<Double, Double> map) {
+        this.currentPrice = currentPrice;
+        this.AreaID = AreaID;
+        this.AreaName = AreaName;
+        this.AreaDescription = AreaDescription;
+        this.map = map;
+    }
+    
     public int getAreaID() {
         return AreaID;
     }
@@ -74,4 +84,13 @@ public class Area {
     public LinkedHashMap<Double, Double> getMap() {
         return map;
     }
+
+    public String getAreaDescription() {
+        return AreaDescription;
+    }
+
+    public void setAreaDescription(String AreaDescription) {
+        this.AreaDescription = AreaDescription;
+    }
+    
 }
