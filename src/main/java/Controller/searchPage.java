@@ -20,6 +20,7 @@ public class searchPage {
     private String address;
     private int min, max;
     private String dataMap;
+    
 
     public String getDataMap() {
         return dataMap;

@@ -5,6 +5,7 @@
  */
 package entity;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 /**
@@ -15,6 +16,7 @@ public class Area {
     
     private double currentPrice;
     private LinkedHashMap<Double, Double> map;
+    private ArrayList<Location> mapsl;
     
     public Area(double currentPrice, LinkedHashMap<Double, Double> map) {
         this.currentPrice = currentPrice;
@@ -34,6 +36,17 @@ public class Area {
         this.AreaMinPrice = AreaMinPrice;
     }
 
+    public Area(double currentPrice, ArrayList<Location> mapsl, int AreaID, String AreaName, double AreaMaxPrice, double AreaMinPrice) {
+        this.currentPrice = currentPrice;
+        this.map = map;
+        this.mapsl = mapsl;
+        this.AreaID = AreaID;
+        this.AreaName = AreaName;
+        this.AreaMaxPrice = AreaMaxPrice;
+        this.AreaMinPrice = AreaMinPrice;
+    }
+
+    
     public int getAreaID() {
         return AreaID;
     }

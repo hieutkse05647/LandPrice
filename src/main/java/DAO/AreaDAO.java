@@ -13,9 +13,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AreaDAO {
+public  class AreaDAO {
 
-    public List<Area> getArea(String query) throws Exception {
+    public static List<Area> getArea(String query) throws Exception {
         Connection conn = new DBContext().getConnection();
         PreparedStatement ps = conn.prepareStatement(query);
         List<Area> area = new ArrayList<>();
@@ -33,28 +33,54 @@ public class AreaDAO {
         return area;
     }
 
-    public List<Area> getAllArea(String AreaName) throws Exception {
+    public static List<Area> getAllArea(String AreaName) throws Exception {
         String query = "Select * From Area";
         return getArea(query);
     }
     
-    public List<Area> getAreaByPrice(double maxPriceSearch, double minPriceSearch) throws Exception {
+    public static List<Integer> getAllAreaID() throws Exception {
+        String query = "Select AreaID From Area";
+        Connection conn = new DBContext().getConnection();
+        PreparedStatement ps = conn.prepareStatement(query);
+        List<Integer> areaID = new ArrayList<>();
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            int AreaID = rs.getInt("AreaID");
+            areaID.add(AreaID);
+        }
+        rs.close();
+        conn.close();
+        return areaID;
+    }
+    
+    
+    public static List<Area> getAreaByPrice(double maxPriceSearch, double minPriceSearch) throws Exception {
         String query = "Select * From Area Where Price Beetween " + maxPriceSearch + " AND " + minPriceSearch;
         return getArea(query);
     }
 
-    public List<Area> getAreaByName(String AreaName) throws Exception {
+    public static List<Area> getAreaByName(String AreaName) throws Exception {
         String query = "Select * From Area Where AreaName=" + AreaName;
         return getArea(query);
     }
 
-    public List<Area> getAreaByID(int AreaID) throws Exception {
+    public static Area getAreaByID(int AreaID) throws Exception {
         String query = "Select * From Area Where AreaID = " + AreaID;
-        return getArea(query);
+        Connection conn = new DBContext().getConnection();
+        PreparedStatement ps = conn.prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+            String AreaName = rs.getString("AreaName");
+            double AreaMaxPrice = rs.getDouble("AreaMaxPrice");
+            double AreaMinPrice = rs.getDouble("AreaMinPrice");
+            double CurrentPrice = rs.getDouble("Price");
+            Area area = new Area(AreaID, AreaName, AreaMaxPrice, AreaMinPrice, CurrentPrice);
+        rs.close();
+        conn.close();
+        return area;
     }
 
     // add object
-    public void addNewArea(Area a) throws Exception {
+    public static void addNewArea(Area a) throws Exception {
         String query = "insert into Area values(?,?,?,?,?)";
         Connection conn = new DBContext().getConnection();
         PreparedStatement ps = conn.prepareStatement(query);
