@@ -11,29 +11,57 @@
         <link rel="stylesheet" href="css/searchPage.css"></link>
     </h:head>
     <h:body>
-        <p:commandButton value ="Get JSON" oncomplete="log(${searchPage.dataMap})"/>
         <c:set var="bean" value="${searchPage}" />
-        <h:form>
+<!--        <p:commandButton value ="Get JSON" oncomplete="log(${bean.dataMap})"/>
+        <p:commandButton value ="Remove JSON" oncomplete="remove()"/>
+        <p:commandButton value ="Put panel" oncomplete="put()"/>
+        <button id = "removeBtn" value="delete"></button>-->
+        <h:form id="searchForm" >
             <p:outputLabel value="Địa chỉ cần tìm: " />
-            <p:inputText value="${bean.address}" class="search-location" />
-            <input id="pac-input" type="text" placeholder="Search Box"></input>
+            <p:inputText value="${bean.address}" class="search-location" id="pac-input"/>
+            <!--<input  type="text" placeholder="Search Box" value="${bean.address}"></input>-->
             <!--<p:inputText  value="${bean.address}" />-->
             <!--<input id = "pac-input"></input>-->
             <br />
             <p:outputLabel value="Khoảng giá trị cần tìm" />
-            <br />
+
             <h:panelGrid columns="1" style="margin-bottom: 10px">
                 <h:outputText id="displayRange"
-                              value="Between #{bean.min} and #{bean.max}" />
+                              value="giữa ${bean.min} tỉ và ${bean.max} tỉ" />
                 <p:slider for="txt6,txt7" display="displayRange" style="width: 400px"
-                          range="true" displayTemplate="Between {min} and {max}" />
+                          range="true"  displayTemplate="giữa {min} tỉ và {max} tỉ">
+                    <p:ajax event="slideEnd" process="@form" update="data-map, panel-detail" listener="${bean.onSlideChange()}" oncomplete="remove(),updateMarker(),putPanel()"/>
+                </p:slider>
             </h:panelGrid>
-            <h:inputHidden id="txt6" value="#{bean.min}" />
-            <h:inputHidden id="txt7" value="#{bean.max}" />
-        </h:form>
-        <div id="info-box">?</div>
+            <h:inputHidden id="data-map" value="${bean.dataMap}">
+                
+            </h:inputHidden>
+            <h:inputHidden id="txt6" value="${bean.min}">
+               
+            </h:inputHidden>
+            <h:inputHidden id="txt7" value="${bean.max}">
+
+            </h:inputHidden>
+        </h:form >
+        <div id="info-box"></div>
         <div id="map"></div>
 
+        <p:accordionPanel value="${bean.areas}" var="area" id="panel-detail" activeIndex="#null" widgetVar="accordian-widgetVar">
+            <p:tab  title="#{area.areaName}" id="test123">
+                <h:panelGrid columns="2" cellpadding="5">
+                
+                <h:outputText value="Tên: " style="font-weight: bold" />
+                <h:outputText value="#{area.areaName}" />
+ 
+                <h:outputText value="Thông tin: " style="font-weight: bold" />
+                <h:outputText value="#{area.areaDescription}" />
+ 
+                <h:outputText value="Giá trung bình: " style="font-weight: bold" />
+                <h:outputText value="#{area.currentPrice} tỉ" />
+            </h:panelGrid>
+            </p:tab>
+        </p:accordionPanel>
+        
         <div id="infowindow-content">
             <img src="" width="16" height="16" id="place-icon"/>
             <span id="place-name"  class="title"></span><br/>

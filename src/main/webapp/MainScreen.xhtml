@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <c:set var="bean" value="${homeBean}" />
+        <h:panelGroup>
+            
+            <h:form id="form">
+                <p>
+                    Area Name
+                    <h:inputText value="${bean.areaName}"></h:inputText>
+                </p>
+                <p>
+                    Area Description 
+                    <h:inputText value="${bean.areaDescription}"></h:inputText>
+                </p>
+                <p:selectBooleanCheckbox value="${bean.wantMinMax}" itemLabel="Khoảng giá/giá hiện tại">
+                    <p:ajax event="change" update="form"></p:ajax>
+                </p:selectBooleanCheckbox>
+
+                <h:panelGroup rendered="${bean.wantMinMax}">
+                    Min: <h:inputText label="Min" value="${bean.minValueInput}"></h:inputText>
+                    Max: <h:inputText label="Max" value="${bean.maxValueInput}"></h:inputText>
+                </h:panelGroup>
+
+                <h:panelGroup rendered="${not bean.wantMinMax}">
+                    Giá hiện tại: <h:inputText value="${bean.currentPriceInput}"></h:inputText>
+                </h:panelGroup>
+
+                <p>
+                    North West <h:inputText  id="northWest" value="${bean.northWestValue}"/>
+                </p>
+                <p>
+                    North East <h:inputText  id="northEast" value="${bean.northEastValue}"/>
+                </p>
+                <p>
+                    South East <h:inputText  id="southEast" value="${bean.southEastValue}"/>
+                </p>
+                <p>
+                    South West <h:inputText  id="southWest" value="${bean.southWestValue}"/>
+                </p>
+                <p>Locations:</p>
+                <p:inputTextarea rows="10" cols="20" id ="fname" value ="${bean.textAreaCoordinates}"/>
+
+                <button type="button" onclick="draw()" id="btnDraw">Draw</button>
+                <button type="button" onclick="clearInput()" id="btnClear">Clear</button>
+
+                <h:commandButton onclick="getFourCorner()" value="Send" id="sendButton" action="#{bean.submitData}">
+                    <f:ajax execute="@form"/>
+                </h:commandButton> 
+            </h:form>
+            
+            
+            <div id="map" style="height: 100%; width: 100%; position: absolute"></div>
+
+        </h:panelGroup>
+        
+        <script type="text/javascript" src="js/mainScreen.js"></script>
+        <script type="text/javascript"
+                src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCHI3U4hbpOvJL1QgtkTqopAm1pc53xjCE&amp;libraries=places&amp;callback=initMap"
+        async="true" defer="true"></script>
+    </h:body>
+</html>
+
