@@ -95,14 +95,15 @@ public  class AreaDAO {
 
     
     //when submit form after add marker
-    public void addNewAreaWithForm(String areaName, double maxPrice, double minPrice, double curentPrice) throws Exception {
-        String query = "insert into Area values(?,?,?,?,?)";
+    public void addNewAreaWithForm(String areaName, double maxPrice, double minPrice, double curentPrice, String description) throws Exception {
+        String query = "insert into Area (AreaName, AreaMaxPrice, AreaMinPrice, Price, AreaDescription) values(?,?,?,?,?)";
         Connection conn = new DBContext().getConnection();
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, areaName);
         ps.setDouble(2, maxPrice);
         ps.setDouble(3, minPrice);
         ps.setDouble(4, curentPrice); 
+        ps.setString(5, description);
         ps.executeUpdate();
         conn.close();
     }

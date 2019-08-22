@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import DAO.AreaDAO;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -36,7 +37,13 @@ public class HomeBean {
     public void submitData(){
         int i = 1;
         //data collect here
-
+        AreaDAO dao = new AreaDAO();
+        System.out.println("adding to database");
+        try{
+            dao.addNewAreaWithForm(areaName, maxValueInput, minValueInput, currentPriceInput, areaDescription);
+        }catch(Exception e){
+            System.out.println(e.getStackTrace());
+        }   
         //TODO: submit data to database
     }
 
