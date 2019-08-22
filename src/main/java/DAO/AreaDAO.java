@@ -26,6 +26,7 @@ public  class AreaDAO {
             double AreaMaxPrice = rs.getDouble("AreaMaxPrice");
             double AreaMinPrice = rs.getDouble("AreaMinPrice");
             double CurrentPrice = rs.getDouble("Price");
+            String description = rs.getString("AreaDescription");
             area.add(new Area(AreaID, AreaName, AreaMaxPrice, AreaMinPrice, CurrentPrice));
         }
         rs.close();

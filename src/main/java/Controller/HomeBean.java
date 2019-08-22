@@ -41,6 +41,7 @@ public class HomeBean {
         System.out.println("adding to database");
         try{
             dao.addNewAreaWithForm(areaName, maxValueInput, minValueInput, currentPriceInput, areaDescription);
+            //todo: add data to location table
         }catch(Exception e){
             System.out.println(e.getStackTrace());
         }   
