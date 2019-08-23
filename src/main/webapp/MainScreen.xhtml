@@ -23,33 +23,31 @@
                     <h:inputText value="${bean.areaDescription}"></h:inputText>
                 </p>
                 <p:selectBooleanCheckbox value="${bean.wantMinMax}" itemLabel="Khoảng giá/giá hiện tại">
-                    <p:ajax event="change" update="form"></p:ajax>
+                    <p:ajax event="change" update="price"></p:ajax>
                 </p:selectBooleanCheckbox>
 
-                <h:panelGroup rendered="${bean.wantMinMax}">
-                    Min: <h:inputText label="Min" value="${bean.minValueInput}"></h:inputText>
-                    Max: <h:inputText label="Max" value="${bean.maxValueInput}"></h:inputText>
-                </h:panelGroup>
+                <h:panelGroup id="price">
+                    <h:panelGroup rendered="${bean.wantMinMax}">
+                        Min: <h:inputText label="Min" value="${bean.minValueInput}"></h:inputText>
+                        Max: <h:inputText label="Max" value="${bean.maxValueInput}"></h:inputText>
+                    </h:panelGroup>
 
-                <h:panelGroup rendered="${not bean.wantMinMax}">
-                    Giá hiện tại: <h:inputText value="${bean.currentPriceInput}"></h:inputText>
+                    <h:panelGroup rendered="${not bean.wantMinMax}">
+                        Giá hiện tại: <h:inputText value="${bean.currentPriceInput}"></h:inputText>
+                    </h:panelGroup>
                 </h:panelGroup>
-
-                <p>
-                    North West <h:inputText  id="northWest" value="${bean.northWestValue}"/>
-                </p>
-                <p>
-                    North East <h:inputText  id="northEast" value="${bean.northEastValue}"/>
-                </p>
-                <p>
-                    South East <h:inputText  id="southEast" value="${bean.southEastValue}"/>
-                </p>
-                <p>
-                    South West <h:inputText  id="southWest" value="${bean.southWestValue}"/>
-                </p>
+                
+                     <h:inputHidden   id="northWest" value="${bean.northWestValue}"/>
+                
+                     <h:inputHidden  id="northEast" value="${bean.northEastValue}"/>
+                
+                     <h:inputHidden  id="southEast" value="${bean.southEastValue}"/>
+                
+                     <h:inputHidden  id="southWest" value="${bean.southWestValue}"/>
+                
                 <p>Locations:</p>
-                <p:inputTextarea rows="10" cols="20" id ="fname" value ="${bean.textAreaCoordinates}"/>
-
+                <h:inputHidden id ="fname" value ="${bean.textAreaCoordinates}"></h:inputHidden>
+                <h:inputHidden id ="json" value ="${bean.textAreaJSON}"></h:inputHidden>
                 <button type="button" onclick="draw()" id="btnDraw">Draw</button>
                 <button type="button" onclick="clearInput()" id="btnClear">Clear</button>
 

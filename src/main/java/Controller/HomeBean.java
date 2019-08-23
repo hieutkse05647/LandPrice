@@ -7,10 +7,12 @@ package Controller;
 
 import DAO.AreaDAO;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
+import org.primefaces.json.JSONArray;
 import org.primefaces.json.JSONObject;
 
 /**
@@ -28,7 +30,8 @@ public class HomeBean {
     private String northWestValue, northEastValue, southEastValue, southWestValue;
     private String areaName;
     private String areaDescription;
-    
+    private String textAreaJSON;
+
     @PostConstruct
     public void init() {
         wantMinMax = true;
@@ -39,9 +42,22 @@ public class HomeBean {
         //data collect here
         AreaDAO dao = new AreaDAO();
         System.out.println("adding to database");
+        JSONArray jsonArray = new JSONArray(textAreaJSON);
+        LinkedHashMap<Double, Double> map = new LinkedHashMap<>();
+        for (Object element: jsonArray){
+            JSONArray arrayElement = (JSONArray)element;
+            Double coorX = arrayElement.getDouble(0);
+            Double coorY = arrayElement.getDouble(1);
+            map.put(coorX, coorY);
+        }
+        i++;
         try{
+            i++;
             dao.addNewAreaWithForm(areaName, maxValueInput, minValueInput, currentPriceInput, areaDescription);
+            
             //todo: add data to location table
+            // using linkedhashmap : map
+            
         }catch(Exception e){
             System.out.println(e.getStackTrace());
         }   
@@ -141,4 +157,11 @@ public class HomeBean {
         this.wantMinMax = wantMinMax;
     }
     
+    public String getTextAreaJSON() {
+        return textAreaJSON;
+    }
+
+    public void setTextAreaJSON(String textAreaJSON) {
+        this.textAreaJSON = textAreaJSON;
+    }
 }

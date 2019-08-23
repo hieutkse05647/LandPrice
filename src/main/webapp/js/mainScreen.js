@@ -7,7 +7,8 @@ var map;
 var infoWindow;
 var selectedLayer;
 var selectedMarker = [];
-var northWest,northEast,southEast,southWest
+var northWest,northEast,southEast,southWest;
+var listCoordinates = [];
 function initMap() {
     var latitude = 21.012633; // YOUR LATITUDE VALUE
     var longitude = 105.527423; // YOUR LONGITUDE VALUE
@@ -32,6 +33,9 @@ function initMap() {
 
         var content = document.getElementById('form:fname').value;
         document.getElementById('form:fname').value = content + event.latLng.lat() + "," + event.latLng.lng() + "\n\n";
+        
+        listCoordinates.push([event.latLng.lat(),event.latLng.lng()]);
+        document.getElementById('form:json').value = JSON.stringify(listCoordinates);
     });
     google.maps.event.addListener(map, 'bounds_changed', function () {
         var bounds = map.getBounds();
