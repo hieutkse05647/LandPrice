@@ -8,59 +8,77 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <title>Facelet Title</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css"></link>
+        <link rel="stylesheet" href="css/mainScreen.css"></link>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
     </h:head>
     <h:body>
         <c:set var="bean" value="${homeBean}" />
-        <h:panelGroup>
-            
-            <h:form id="form">
-                <p>
-                    Area Name
-                    <h:inputText value="${bean.areaName}"></h:inputText>
-                </p>
-                <p>
-                    Area Description 
-                    <h:inputText value="${bean.areaDescription}"></h:inputText>
-                </p>
-                <p:selectBooleanCheckbox value="${bean.wantMinMax}" itemLabel="Khoảng giá/giá hiện tại">
-                    <p:ajax event="change" update="price"></p:ajax>
-                </p:selectBooleanCheckbox>
+        <div class="container d-flex h-100 flex-column">
+            <div class="row bg-light flex-fill d-flex">
+                <div class="col-md-9">
+                    <input id="pac-input" class="controls" type="text" placeholder="Search Box"/>
+                    <div id="map" class="p-2 border" style="height: 100%; width: 100%; position: absolute"></div>
+                </div>
+                <div class="col-md-3">
+                    <h:form id="form" class="p-2 border">
+                        <div class="md-form">
+                            <i class="fas fa-user prefix grey-text"></i>
+                            <h:outputLabel for="form:name">Tên địa điểm: </h:outputLabel>
+                            <h:inputText id="name" value="${bean.areaName}" ></h:inputText>
+                        </div>
+                        <div class="md-form">
+                            <i class="fas fa-user prefix grey-text"></i>
+                            <h:outputLabel for="form:description">Miêu tả địa điểm: </h:outputLabel>
+                            <h:inputText id="description" value="${bean.areaDescription}"></h:inputText>
+                        </div>
+                        <div class="md-form">
+                            <i class="fas fa-user prefix grey-text"></i>
+                            <p:selectBooleanCheckbox value="${bean.wantMinMax}" itemLabel="Khoảng giá/giá hiện tại">
+                                <p:ajax event="change" update="price"></p:ajax>
+                            </p:selectBooleanCheckbox>
+                        </div>
+                        <div class="md-form" style="margin-bottom: 2px;">
+                            <h:panelGroup id="price">
+                                <h:panelGroup rendered="${bean.wantMinMax}">
+                                    <h:outputLabel for="form:minValue">Giá nhỏ nhất: </h:outputLabel>
+                                    <h:inputText id="minValue" label="Min" value="${bean.minValueInput}"></h:inputText>
+                                    <h:outputLabel for="form:maxValue">Giá lớn nhất: </h:outputLabel>
+                                    <h:inputText id="maxValue" label="Max" value="${bean.maxValueInput}"></h:inputText>
+                                </h:panelGroup>
 
-                <h:panelGroup id="price">
-                    <h:panelGroup rendered="${bean.wantMinMax}">
-                        Min: <h:inputText label="Min" value="${bean.minValueInput}"></h:inputText>
-                        Max: <h:inputText label="Max" value="${bean.maxValueInput}"></h:inputText>
-                    </h:panelGroup>
+                                <h:panelGroup rendered="${not bean.wantMinMax}">
+                                    <h:outputLabel for="form:currentPrice">Giá hiện tại: </h:outputLabel>
+                                    <h:inputText id="currentPrice" value="${bean.currentPriceInput}"></h:inputText>
+                                    <br/>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </div>
 
-                    <h:panelGroup rendered="${not bean.wantMinMax}">
-                        Giá hiện tại: <h:inputText value="${bean.currentPriceInput}"></h:inputText>
-                    </h:panelGroup>
-                </h:panelGroup>
-                
-                     <h:inputHidden   id="northWest" value="${bean.northWestValue}"/>
-                
-                     <h:inputHidden  id="northEast" value="${bean.northEastValue}"/>
-                
-                     <h:inputHidden  id="southEast" value="${bean.southEastValue}"/>
-                
-                     <h:inputHidden  id="southWest" value="${bean.southWestValue}"/>
-                
-                <p>Locations:</p>
-                <h:inputHidden id ="fname" value ="${bean.textAreaCoordinates}"></h:inputHidden>
-                <h:inputHidden id ="json" value ="${bean.textAreaJSON}"></h:inputHidden>
-                <button type="button" onclick="draw()" id="btnDraw">Draw</button>
-                <button type="button" onclick="clearInput()" id="btnClear">Clear</button>
 
-                <h:commandButton onclick="getFourCorner()" value="Send" id="sendButton" action="#{bean.submitData}">
-                    <f:ajax execute="@form"/>
-                </h:commandButton> 
-            </h:form>
-            
-            
-            <div id="map" style="height: 100%; width: 100%; position: absolute"></div>
+                        <h:inputHidden  id="northWest" value="${bean.northWestValue}"/>
 
-        </h:panelGroup>
-        
+                        <h:inputHidden  id="northEast" value="${bean.northEastValue}"/>
+
+                        <h:inputHidden  id="southEast" value="${bean.southEastValue}"/>
+
+                        <h:inputHidden  id="southWest" value="${bean.southWestValue}"/>
+
+                        <h:inputHidden id ="fname" value ="${bean.textAreaCoordinates}"></h:inputHidden>
+                        <h:inputHidden id ="json" value ="${bean.textAreaJSON}"></h:inputHidden>
+                        <button type="button" onclick="draw()" id="btnDraw">Draw</button>
+                        <button type="button" onclick="clearInput()" id="btnClear">Clear</button>
+
+                        <h:commandButton onclick="getFourCorner()" value="Save" id="save" action="#{bean.submitData}">
+                            <f:ajax execute="@form"/>
+                        </h:commandButton> 
+                    </h:form>
+                </div>
+            </div>
+        </div>
+
+
+
         <script type="text/javascript" src="js/mainScreen.js"></script>
         <script type="text/javascript"
                 src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCHI3U4hbpOvJL1QgtkTqopAm1pc53xjCE&amp;libraries=places&amp;callback=initMap"
