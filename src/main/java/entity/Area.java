@@ -29,12 +29,13 @@ public class Area {
     private double AreaMinPrice;
     private String AreaDescription;
     
-    public Area( int AreaID, String AreaName, double AreaMaxPrice, double AreaMinPrice,double currentPrice) {
+    public Area( int AreaID, String AreaName, double AreaMaxPrice, double AreaMinPrice,double currentPrice,String AreaDescription) {
         this.currentPrice = currentPrice;
         this.AreaID = AreaID;
         this.AreaName = AreaName;
         this.AreaMaxPrice = AreaMaxPrice;
         this.AreaMinPrice = AreaMinPrice;
+        this.AreaDescription = AreaDescription;
     }
 
     public Area(double currentPrice, ArrayList<Location> mapsl, int AreaID, String AreaName, double AreaMaxPrice, double AreaMinPrice,String AreaDescription) {
