@@ -32,6 +32,7 @@ public class searchPage {
         areas = new ArrayList<>();
         activeIndex = null;
         //TODO: CALL BACKEND GET ALL DATA 
+        // Call method : getAllAreaWithLocation();
         
         areas = createAreasArray();
         areasAll = areas;

@@ -40,6 +40,8 @@ public class LocationDAO {
         String query = "Select * From Location Where AreaID = " + areaIdInput;
         return getLocation(query);
     }
+    
+   
 
 
     // add object - Location - Marker
@@ -76,4 +78,8 @@ public class LocationDAO {
         conn.prepareStatement(query).executeUpdate();
         conn.close();
     }
+    
+    
+     
+     
 }

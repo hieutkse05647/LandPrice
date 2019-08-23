@@ -37,7 +37,7 @@ public class Area {
         this.AreaMinPrice = AreaMinPrice;
     }
 
-    public Area(double currentPrice, ArrayList<Location> mapsl, int AreaID, String AreaName, double AreaMaxPrice, double AreaMinPrice) {
+    public Area(double currentPrice, ArrayList<Location> mapsl, int AreaID, String AreaName, double AreaMaxPrice, double AreaMinPrice,String AreaDescription) {
         this.currentPrice = currentPrice;
         this.map = map;
         this.mapsl = mapsl;
@@ -45,6 +45,7 @@ public class Area {
         this.AreaName = AreaName;
         this.AreaMaxPrice = AreaMaxPrice;
         this.AreaMinPrice = AreaMinPrice;
+        this.AreaDescription = AreaDescription;
     }
 
     public Area( int AreaID, String AreaName, String description, double currentPrice, LinkedHashMap<Double, Double> map) {
