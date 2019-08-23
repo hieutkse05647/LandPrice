@@ -54,6 +54,19 @@ public  class AreaDAO {
         return areaID;
     }
     
+    public static int getLastIDArea() throws Exception {
+        String query = "Select Max (AreaID) as LastIDArea from Area";
+        Connection conn = new DBContext().getConnection();
+        PreparedStatement ps = conn.prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+        int lastID = 0;
+        while (rs.next()) {
+            lastID = rs.getInt("LastIDArea");
+        }
+        rs.close();
+        conn.close();
+        return lastID;
+    }
     
     public static List<Area> getAreaByPrice(double maxPriceSearch, double minPriceSearch) throws Exception {
         String query = "Select * From Area Where Price Beetween " + maxPriceSearch + " AND " + minPriceSearch;

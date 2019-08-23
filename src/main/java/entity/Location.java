@@ -11,10 +11,10 @@ package entity;
  */
 public class Location {
     private int AreaID;
-    private float latitude;
-    private float longtitude;
+    private Double latitude;
+    private Double longtitude;
 
-    public Location(int AreaID,float latitude, float longtitude) {
+    public Location(int AreaID,Double latitude, Double longtitude) {
         this.AreaID = AreaID;
         this.latitude = latitude;
         this.longtitude = longtitude;
@@ -28,21 +28,22 @@ public class Location {
         this.AreaID = AreaID;
     }
 
-    public float getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(float latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public float getLongtitude() {
+    public Double getLongtitude() {
         return longtitude;
     }
 
-    public void setLongtitude(float longtitude) {
+    public void setLongtitude(Double longtitude) {
         this.longtitude = longtitude;
     }
+
     
     
 }

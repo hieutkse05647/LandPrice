@@ -6,8 +6,10 @@
 package Controller;
 
 import DAO.AreaDAO;
+import DAO.LocationDAO;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -41,6 +43,7 @@ public class HomeBean {
         int i = 1;
         //data collect here
         AreaDAO dao = new AreaDAO();
+        LocationDAO LocateDao = new LocationDAO();
         System.out.println("adding to database");
         JSONArray jsonArray = new JSONArray(textAreaJSON);
         LinkedHashMap<Double, Double> map = new LinkedHashMap<>();
@@ -54,7 +57,13 @@ public class HomeBean {
         try{
             i++;
             dao.addNewAreaWithForm(areaName, maxValueInput, minValueInput, currentPriceInput, areaDescription);
-            
+            // get ID của thằng vừa thêm
+            int lastID = dao.getLastIDArea();
+            for (Map.Entry<Double, Double> entry : map.entrySet()) {
+                Double CorX = entry.getKey();
+                Double CorY = entry.getValue();
+                LocateDao.addNewLocationWithForm(lastID, CorX, CorY);
+            }
             //todo: add data to location table
             // using linkedhashmap : map
             
