@@ -175,6 +175,8 @@ public class AreaDAO {
             areaWithLocation.add(new Area(areaList.get(i).getCurrentPrice(), mapsltemp, areaList.get(i).getAreaID(),
                      areaList.get(i).getAreaName(), areaList.get(i).getAreaMaxPrice(),
                     areaList.get(i).getAreaMinPrice(), areaList.get(i).getAreaDescription()));
+ 	    //clear mapsl after add new 
+	    mapsltemp.removeAll();
         }
         rs.close();
         conn.close();
