@@ -1,16 +1,19 @@
 package Controller;
 
+import DAO.AreaDAO;
 import adapter.GeoJSONAdapter;
 import entity.Area;
+import entity.Location;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import org.primefaces.json.JSONObject;
 
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class searchPage {
 
     private String address;
@@ -34,7 +37,16 @@ public class searchPage {
         //TODO: CALL BACKEND GET ALL DATA 
         // Call method : getAllAreaWithLocation();
         
-        areas = createAreasArray();
+        AreaDAO dao = new AreaDAO();
+        ArrayList<Area> listFromDB = new ArrayList<>();
+        try{
+            listFromDB = dao.getAllAreaWithLocation();
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        
+//        areas = createAreasArray();
+        areas = setDataAreasArray(listFromDB);
         areasAll = areas;
         
         JSONObject json = createJSON(areas);
@@ -64,6 +76,23 @@ public class searchPage {
         return GeoJSONAdapter.createGeoJSON(listAreas);
     }
 
+    private ArrayList<Area> setDataAreasArray(ArrayList<Area> listFromDB){
+        ArrayList<Area> listAreas= new ArrayList<>();
+        int countId=0;
+        for (Area area: listFromDB){
+            LinkedHashMap<Double, Double> map = new LinkedHashMap<>();
+            Location firstLocation = null;
+            for (Location location: area.getMapsl()){
+                if (firstLocation == null){
+                    firstLocation = location;
+                }
+                map.put(location.getLongtitude(), location.getLatitude());
+            }
+            map.put(firstLocation.getLongtitude(), firstLocation.getLatitude());
+            listAreas.add(new Area(countId++, area.getAreaName(), area.getAreaDescription(), area.getCurrentPrice(), map));
+        }
+        return listAreas;
+    }
     private ArrayList<Area> createAreasArray() {
         ArrayList<Area> listAreas= new ArrayList<>();
         listAreas.clear();

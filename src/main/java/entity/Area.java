@@ -38,7 +38,11 @@ public class Area {
         this.AreaDescription = AreaDescription;
     }
 
+<<<<<<< HEAD
     public Area(double currentPrice, ArrayList<Location> mapsl, int AreaID, String AreaName, double AreaMaxPrice, double AreaMinPrice,String AreaDescription) {
+=======
+    public Area(double currentPrice, ArrayList<Location> mapsl, int AreaID, String AreaName, double AreaMaxPrice, double AreaMinPrice, String AreaDescription) {
+>>>>>>> 42f78622fb2c341c3c8e18aaa4326bfc6330abf2
         this.currentPrice = currentPrice;
         this.map = map;
         this.mapsl = mapsl;
@@ -105,4 +109,13 @@ public class Area {
     public LinkedHashMap<Double, Double> getMap() {
         return map;
     }
+
+    public ArrayList<Location> getMapsl() {
+        return mapsl;
+    }
+
+    public void setMapsl(ArrayList<Location> mapsl) {
+        this.mapsl = mapsl;
+    }
+    
 }

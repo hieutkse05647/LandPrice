@@ -53,7 +53,11 @@ public class AreaDAO {
         conn.close();
         return areaID;
     }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 42f78622fb2c341c3c8e18aaa4326bfc6330abf2
     public static int getLastIDArea() throws Exception {
         String query = "Select Max (AreaID) as LastIDArea from Area";
         Connection conn = new DBContext().getConnection();
@@ -67,7 +71,11 @@ public class AreaDAO {
         conn.close();
         return lastID;
     }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 42f78622fb2c341c3c8e18aaa4326bfc6330abf2
     public static List<Area> getAreaByPrice(double maxPriceSearch, double minPriceSearch) throws Exception {
         String query = "Select * From Area Where Price Beetween " + maxPriceSearch + " AND " + minPriceSearch;
         return getArea(query);
@@ -140,6 +148,7 @@ public class AreaDAO {
         conn.prepareStatement(queryLocation).executeUpdate();     // delete All Location - Marker in this Area
         conn.close();
     }
+<<<<<<< HEAD
 
     // when map load init and Location Follow AreaID
     public static ArrayList<Area> getAllAreaWithLocation() throws Exception {
@@ -150,18 +159,34 @@ public class AreaDAO {
         ArrayList<Area> areaWithLocation = new ArrayList<>();
         ArrayList<Area> areaList = new ArrayList<>();
         ArrayList<Location> mapsl = new ArrayList<>();
+=======
+    
+    // when map load init and Location Follow AreaID
+     public ArrayList<Area> getAllAreaWithLocation() throws Exception {
+        String query = "Select a.AreaID,AreaName,AreaMaxPrice,AreaMinPrice,AreaDescription"
+                + ",Price,l.Latitude,l.Longtitude From Area a Inner Join Location l on l.AreaID = a.AreaID order by l.TimeCreated" ;
+        Connection conn = new DBContext().getConnection();
+        PreparedStatement ps = conn.prepareStatement(query);
+        ArrayList<Area> areaWithLocation = new ArrayList<>();
+//        ArrayList<Location> mapsl = new ArrayList<>();
+>>>>>>> 42f78622fb2c341c3c8e18aaa4326bfc6330abf2
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
             int areaID = rs.getInt("AreaID");
             Double latitude = rs.getDouble("Latitude");
             Double longtitude = rs.getDouble("Longtitude");
             // add Location follow AreaID
+<<<<<<< HEAD
             mapsl.add(new Location(areaID, latitude, longtitude));
+=======
+//            mapsl.add(new Location(areaID, latitude,longtitude));
+>>>>>>> 42f78622fb2c341c3c8e18aaa4326bfc6330abf2
             String areaName = rs.getString("AreaName");
             String areaDes = rs.getString("AreaDescription");
             Float areaMaxprice = rs.getFloat("AreaMaxPrice");
             Float areaMinprice = rs.getFloat("AreaMinPrice");
             Float currentPrice = rs.getFloat("Price");
+<<<<<<< HEAD
             areaList.add(new Area(areaID, areaName, areaMaxprice, areaMinprice, currentPrice, areaDes));
         }
 
@@ -177,6 +202,20 @@ public class AreaDAO {
                     areaList.get(i).getAreaMinPrice(), areaList.get(i).getAreaDescription()));
  	    //clear mapsl after add new 
 	    mapsltemp.removeAll();
+=======
+            ArrayList<Location> mapSl = new ArrayList<>();
+            boolean flag = false;
+            for (Area area:areaWithLocation){
+                if (area.getAreaID() == areaID){
+                    area.getMapsl().add(new Location(areaID, latitude, longtitude));
+                    flag = true;
+                }
+            }
+            if (flag == false){
+                mapSl.add(new Location(areaID, latitude, longtitude));
+                areaWithLocation.add(new Area(currentPrice, mapSl, areaID, areaName, areaMaxprice, areaMinprice,areaDes));
+            }
+>>>>>>> 42f78622fb2c341c3c8e18aaa4326bfc6330abf2
         }
         rs.close();
         conn.close();
