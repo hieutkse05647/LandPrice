@@ -6,26 +6,27 @@
 package Controller;
 
 import DAO.AreaDAO;
-import java.util.ArrayList;
+import DAO.LocationDAO;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
-import javax.faces.event.ActionEvent;
+import javax.faces.context.FacesContext;
 import org.primefaces.json.JSONArray;
-import org.primefaces.json.JSONObject;
-
 /**
  *
  * @author tuans
  */
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class HomeBean {
     private boolean wantMinMax;
-    private int maxValueInput;
-    private int minValueInput;
-    private int currentPriceInput;
+    private Float maxValueInput = new Float(0);
+    private Float minValueInput = new Float(0);
+    private Float currentPriceInput = new Float(0);
     private String textAreaCoordinates;
     private String northWestValue, northEastValue, southEastValue, southWestValue;
     private String areaName;
@@ -41,6 +42,7 @@ public class HomeBean {
         int i = 1;
         //data collect here
         AreaDAO dao = new AreaDAO();
+        LocationDAO LocateDao = new LocationDAO();
         System.out.println("adding to database");
         JSONArray jsonArray = new JSONArray(textAreaJSON);
         LinkedHashMap<Double, Double> map = new LinkedHashMap<>();
@@ -54,14 +56,22 @@ public class HomeBean {
         try{
             i++;
             dao.addNewAreaWithForm(areaName, maxValueInput, minValueInput, currentPriceInput, areaDescription);
-            
+            // get ID của thằng vừa thêm
+            int lastID = dao.getLastIDArea();
+            for (Map.Entry<Double, Double> entry : map.entrySet()) {
+                Double CorX = entry.getKey();
+                Double CorY = entry.getValue();
+                LocateDao.addNewLocationWithForm(lastID, CorX, CorY);
+            }
             //todo: add data to location table
             // using linkedhashmap : map
             
         }catch(Exception e){
             System.out.println(e.getStackTrace());
         }   
-        //TODO: submit data to database
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Lưu dữ liện thành công", "Xem dữ liệu ở trang search") );
     }
 
     public String getAreaName() {
@@ -122,28 +132,28 @@ public class HomeBean {
     }
     
     
-    public int getCurrentPriceInput() {
+    public Float getCurrentPriceInput() {
         return currentPriceInput;
     }
 
-    public void setCurrentPriceInput(int currentPriceInput) {
+    public void setCurrentPriceInput(Float currentPriceInput) {
         this.currentPriceInput = currentPriceInput;
     }
     
     
-    public int getMaxValueInput() {
+    public Float getMaxValueInput() {
         return maxValueInput;
     }
 
-    public void setMaxValueInput(int maxValueInput) {
+    public void setMaxValueInput(Float maxValueInput) {
         this.maxValueInput = maxValueInput;
     }
 
-    public int getMinValueInput() {
+    public Float getMinValueInput() {
         return minValueInput;
     }
 
-    public void setMinValueInput(int minValueInput) {
+    public void setMinValueInput(Float minValueInput) {
         this.minValueInput = minValueInput;
     }
     

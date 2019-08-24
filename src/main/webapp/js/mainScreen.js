@@ -161,6 +161,12 @@ function remove() {
 
 function clearInput() {
     document.getElementById('form:fname').value = '';
+    document.getElementById('form:name').value = '';
+    document.getElementById('form:description').value = '';
+    document.getElementById('form:minValue').value = '0.0';
+    document.getElementById('form:maxValue').value = '0.0';
+    document.getElementById('form:currentPrice').value = '0.0';
+    listCoordinates = [];
     removeMarker();
 }
 function getFourCorner(){

@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class LocationController {
 
-    public static boolean checkAreainMap(int AreaID, float SELangtitude, float NWLangtitude, float NWLongitude, float SELongitude) throws Exception {
+    public static boolean checkAreainMap(int AreaID, Double SELangtitude, Double NWLangtitude, Double NWLongitude, Double SELongitude) throws Exception {
         ArrayList<Location> listLocationbyID = new ArrayList<>();
         listLocationbyID = LocationDAO.getLocationByAreaID(AreaID);
         for (int i = 0; i < listLocationbyID.size(); i++) {
@@ -30,7 +30,7 @@ public class LocationController {
         return false;
     }
 
-    public static boolean checkLatLocation(float lat, float SELangtitude, float NWLangtitude) {
+    public static boolean checkLatLocation(Double lat, Double SELangtitude, Double NWLangtitude) {
         if (SELangtitude < lat && lat < NWLangtitude) {
             return true;
         } else {
@@ -38,7 +38,7 @@ public class LocationController {
         }
     }
 
-    public static boolean checkngLocation(float lng, float NWLongitude, float SELongitude) {
+    public static boolean checkngLocation(Double lng, Double NWLongitude, Double SELongitude) {
         if (NWLongitude < lng && lng < SELongitude) {
             return true;
         } else {
@@ -47,7 +47,7 @@ public class LocationController {
     }
 
 	//this method is used to get all Area in Current Map 
-    public static List<Area> AreaInMap(float SELangtitude, float NWLangtitude, float NWLongitude, float SELongitude) throws Exception {
+    public static List<Area> AreaInMap(Double SELangtitude, Double NWLangtitude, Double NWLongitude, Double SELongitude) throws Exception {
         List<Integer> AreaIDlist = AreaDAO.getAllAreaID();
         List<Area> area = new ArrayList();
         for (int i = 0; i < AreaIDlist.size(); i++) {

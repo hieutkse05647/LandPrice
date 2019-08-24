@@ -26,8 +26,8 @@ public class LocationDAO {
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
             int areaID = rs.getInt("AreaID");
-            float latitude = rs.getFloat("Latitude");
-            float longtitude = rs.getFloat("Longtitude");
+            Double latitude = rs.getDouble("Latitude");
+            Double longtitude = rs.getDouble("Longtitude");
             locationList.add(new Location(areaID, latitude,longtitude));
         }
         rs.close();
@@ -44,11 +44,11 @@ public class LocationDAO {
 
     // add object - Location - Marker
     public static void addNewLocation(Location locate) throws Exception {
-        String query = "insert into Location values(?,?,?)";
+        String query = "insert into Location(AreaId,Latitude,Longtitude) values(?,?,?)";
         Connection conn = new DBContext().getConnection();
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setInt(1, locate.getAreaID());
-        ps.setFloat(2, locate.getLatitude());
+        ps.setDouble(2, locate.getLatitude());
         ps.setDouble(3, locate.getLongtitude());
         ps.executeUpdate();
         conn.close();
@@ -57,20 +57,20 @@ public class LocationDAO {
     
     //when submit form add New marker (Location)
     // user choose Area in ListBox -> Controller get ID and add with this AreaID. 
-    public static void addNewLocationWithForm(int areaID, float latitude , float longtitude) throws Exception {
-        String query = "INSERT INTO Location values(?,?,?)";
+    public static void addNewLocationWithForm(int areaID, Double latitude , Double longtitude) throws Exception {
+        String query = "INSERT INTO Location(AreaId,Latitude,Longtitude) values(?,?,?)";
         Connection conn = new DBContext().getConnection();
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setInt(1, areaID);
-        ps.setFloat(2, latitude);
-        ps.setFloat(3, longtitude);
+        ps.setDouble(2, latitude);
+        ps.setDouble(3, longtitude);
         ps.executeUpdate();
         conn.close();
     }
     
     
     //update Area
-    public static void updateLocation(int areaID,  float latitude , float longtitude) throws Exception {
+    public static void updateLocation(int areaID,  Double latitude , Double longtitude) throws Exception {
         String query = "UPDATE Location SET AreaID = '" + areaID + "' , Latitue = " + latitude + " , Longtitude = " + longtitude;
         Connection conn = new DBContext().getConnection();
         conn.prepareStatement(query).executeUpdate();
