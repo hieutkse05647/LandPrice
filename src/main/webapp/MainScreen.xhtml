@@ -45,7 +45,7 @@
                             <h:outputLabel for="form:currentPrice">Giá hiện tại: </h:outputLabel>
                             <h:inputText id="currentPrice" value="${bean.currentPriceInput}" required="true" ></h:inputText>
                         </div>
-                        <h:inputHidden  id="northWest" value="${bean.northWestValue}"/>
+                        <h:inputHidden id="northWest" value="${bean.northWestValue}"/>
 
                         <h:inputHidden  id="northEast" value="${bean.northEastValue}"/>
 
@@ -60,6 +60,7 @@
                         <h:commandButton onclick="getFourCorner()" value="Save" id="save" action="#{bean.submitData}">
                             <f:ajax render="growl" execute="@form"/>
                         </h:commandButton>
+                        <br/>
                         <a href="/LandPriceMangement/search.xhtml">Search page</a>
                     </h:form>
                     <p:growl id="growl" showDetail="true" sticky="true"/>

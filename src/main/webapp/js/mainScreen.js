@@ -45,6 +45,7 @@ function initMap() {
         northEast = ne.lat() + ',' + ne.lng();
         southEast = sw.lat() + ',' + ne.lng();
         southWest = sw.lat() + ',' + sw.lng();
+        getFourCorner();
     });
     var input = document.getElementById('pac-input');
         var searchBox = new google.maps.places.SearchBox(input);
